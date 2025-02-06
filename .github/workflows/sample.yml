@@ -1,0 +1,57 @@
+name: Parasoft Scan
+
+on:
+  workflow_dispatch:  # Allows manual triggering
+  push:
+    branches: [ "main" ]
+
+jobs:
+  parasoft_scan:
+    runs-on: ubuntu-latest
+    outputs:
+      s1_count: ${{ steps.parse_issues.outputs.s1 }}
+      s2_count: ${{ steps.parse_issues.outputs.s2 }}
+      s3_count: ${{ steps.parse_issues.outputs.s3 }}
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Simulate Parasoft Scan (Generate Dummy Data)
+        run: |
+          echo "S1=5" >> $GITHUB_ENV
+          echo "S2=12" >> $GITHUB_ENV
+          echo "S3=20" >> $GITHUB_ENV
+
+      - name: Parse Issue Counts
+        id: parse_issues
+        run: |
+          echo "s1=${{ env.S1 }}" >> $GITHUB_OUTPUT
+          echo "s2=${{ env.S2 }}" >> $GITHUB_OUTPUT
+          echo "s3=${{ env.S3 }}" >> $GITHUB_OUTPUT
+
+      # ------------------ GitHub Actions Summary ------------------
+      - name: Update GitHub Actions Summary
+        run: |
+          echo "### 🚀 Parasoft Scan Results" >> $GITHUB_STEP_SUMMARY
+          echo "![S1 Issues](https://img.shields.io/badge/S1%20Issues-${{ steps.parse_issues.outputs.s1 }}-red)" >> $GITHUB_STEP_SUMMARY
+          echo "![S2 Issues](https://img.shields.io/badge/S2%20Issues-${{ steps.parse_issues.outputs.s2 }}-orange)" >> $GITHUB_STEP_SUMMARY
+          echo "![S3 Issues](https://img.shields.io/badge/S3%20Issues-${{ steps.parse_issues.outputs.s3 }}-yellow)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**S1 Critical Issues:** ${{ steps.parse_issues.outputs.s1 }}" >> $GITHUB_STEP_SUMMARY
+          echo "**S2 Major Issues:** ${{ steps.parse_issues.outputs.s2 }}" >> $GITHUB_STEP_SUMMARY
+          echo "**S3 Minor Issues:** ${{ steps.parse_issues.outputs.s3 }}" >> $GITHUB_STEP_SUMMARY
+
+      # ------------------ Upload JSON Badges as Artifacts ------------------
+      - name: Create JSON Badges
+        run: |
+          mkdir -p badges
+          echo '{"schemaVersion": 1, "label": "S1 Issues", "message": "${{ steps.parse_issues.outputs.s1 }}", "color": "red"}' > badges/s1.json
+          echo '{"schemaVersion": 1, "label": "S2 Issues", "message": "${{ steps.parse_issues.outputs.s2 }}", "color": "orange"}' > badges/s2.json
+          echo '{"schemaVersion": 1, "label": "S3 Issues", "message": "${{ steps.parse_issues.outputs.s3 }}", "color": "yellow"}' > badges/s3.json
+
+      - name: Upload Badge JSON Files
+        uses: actions/upload-artifact@v4
+        with:
+          name: parasoft-badges
+          path: badges/
