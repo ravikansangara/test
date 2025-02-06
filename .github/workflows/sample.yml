@@ -49,9 +49,3 @@ jobs:
           echo '{"schemaVersion": 1, "label": "S1 Issues", "message": "${{ steps.parse_issues.outputs.s1 }}", "color": "red"}' > badges/s1.json
           echo '{"schemaVersion": 1, "label": "S2 Issues", "message": "${{ steps.parse_issues.outputs.s2 }}", "color": "orange"}' > badges/s2.json
           echo '{"schemaVersion": 1, "label": "S3 Issues", "message": "${{ steps.parse_issues.outputs.s3 }}", "color": "yellow"}' > badges/s3.json
-
-      - name: Upload Badge JSON Files
-        uses: actions/upload-artifact@v4
-        with:
-          name: parasoft-badges
-          path: badges/
