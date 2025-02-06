@@ -22,6 +22,7 @@ jobs:
           echo "S1=5" >> $GITHUB_ENV
           echo "S2=12" >> $GITHUB_ENV
           echo "S3=20" >> $GITHUB_ENV
+          echo "S4=50" >> $GITHUB_ENV
 
       - name: Parse Issue Counts
         id: parse_issues
@@ -29,23 +30,22 @@ jobs:
           echo "s1=${{ env.S1 }}" >> $GITHUB_OUTPUT
           echo "s2=${{ env.S2 }}" >> $GITHUB_OUTPUT
           echo "s3=${{ env.S3 }}" >> $GITHUB_OUTPUT
+          echo "s4=${{ env.S3 }}" >> $GITHUB_OUTPUT
 
       # ------------------ GitHub Actions Summary ------------------
       - name: Update GitHub Actions Summary
         run: |
           echo "### 🚀 Parasoft Scan Results" >> $GITHUB_STEP_SUMMARY
-          echo "![S1 Issues](https://img.shields.io/badge/S1%20Issues-${{ steps.parse_issues.outputs.s1 }}-red)" >> $GITHUB_STEP_SUMMARY
-          echo "![S2 Issues](https://img.shields.io/badge/S2%20Issues-${{ steps.parse_issues.outputs.s2 }}-orange)" >> $GITHUB_STEP_SUMMARY
-          echo "![S3 Issues](https://img.shields.io/badge/S3%20Issues-${{ steps.parse_issues.outputs.s3 }}-yellow)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**S1 Critical Issues:** ${{ steps.parse_issues.outputs.s1 }}" >> $GITHUB_STEP_SUMMARY
-          echo "**S2 Major Issues:** ${{ steps.parse_issues.outputs.s2 }}" >> $GITHUB_STEP_SUMMARY
-          echo "**S3 Minor Issues:** ${{ steps.parse_issues.outputs.s3 }}" >> $GITHUB_STEP_SUMMARY
+          echo "![Critical](https://img.shields.io/badge/Critical-${{ steps.parse_issues.outputs.s1 }}-red)" >> $GITHUB_STEP_SUMMARY
+          echo "![High](https://img.shields.io/badge/High-${{ steps.parse_issues.outputs.s2 }}-orange)" >> $GITHUB_STEP_SUMMARY
+          echo "![Medium](https://img.shields.io/badge/Medium-${{ steps.parse_issues.outputs.s3 }}-yellow)" >> $GITHUB_STEP_SUMMARY
+          echo "![Low](https://img.shields.io/badge/Low-${{ steps.parse_issues.outputs.s4 }}-yellow)" >> $GITHUB_STEP_SUMMARY
 
       # ------------------ Upload JSON Badges as Artifacts ------------------
       - name: Create JSON Badges
         run: |
           mkdir -p badges
-          echo '{"schemaVersion": 1, "label": "S1 Issues", "message": "${{ steps.parse_issues.outputs.s1 }}", "color": "red"}' > badges/s1.json
-          echo '{"schemaVersion": 1, "label": "S2 Issues", "message": "${{ steps.parse_issues.outputs.s2 }}", "color": "orange"}' > badges/s2.json
-          echo '{"schemaVersion": 1, "label": "S3 Issues", "message": "${{ steps.parse_issues.outputs.s3 }}", "color": "yellow"}' > badges/s3.json
+          echo '{"schemaVersion": 1, "label": "Critical", "message": "${{ steps.parse_issues.outputs.s1 }}", "color": "red"}' > badges/s1.json
+          echo '{"schemaVersion": 1, "label": "High", "message": "${{ steps.parse_issues.outputs.s2 }}", "color": "orange"}' > badges/s2.json
+          echo '{"schemaVersion": 1, "label": "Medium", "message": "${{ steps.parse_issues.outputs.s3 }}", "color": "yellow"}' > badges/s3.json
+          echo '{"schemaVersion": 1, "label": "Low", "message": "${{ steps.parse_issues.outputs.s4 }}", "color": "red"}' > badges/s4.json
