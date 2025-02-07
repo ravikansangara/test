@@ -35,11 +35,11 @@ jobs:
       # ------------------ GitHub Actions Summary ------------------
       - name: Update GitHub Actions Summary
         run: |
-          echo "### 🚀 Parasoft Scan Results" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔍 Parasoft Scan Results" >> $GITHUB_STEP_SUMMARY
           echo ""
           echo "![Critical](https://img.shields.io/badge/Critical-${{ steps.parse_issues.outputs.s1 }}-red)" \
-          "![High](https://img.shields.io/badge/High-${{ steps.parse_issues.outputs.s2 }}-orange)" \
-          "![Medium](https://img.shields.io/badge/Medium-${{ steps.parse_issues.outputs.s3 }}-yellow)" \
-          "![Low](https://img.shields.io/badge/Low-${{ steps.parse_issues.outputs.s4 }}-yellow)" >> $GITHUB_STEP_SUMMARY
+          "  ![High](https://img.shields.io/badge/High-${{ steps.parse_issues.outputs.s2 }}-orange)" \
+          "  ![Medium](https://img.shields.io/badge/Medium-${{ steps.parse_issues.outputs.s3 }}-yellow)" \
+          "  ![Low](https://img.shields.io/badge/Low-${{ steps.parse_issues.outputs.s4 }}-blue)" >> $GITHUB_STEP_SUMMARY
 
    
