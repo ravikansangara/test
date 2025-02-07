@@ -36,16 +36,10 @@ jobs:
       - name: Update GitHub Actions Summary
         run: |
           echo "### 🚀 Parasoft Scan Results" >> $GITHUB_STEP_SUMMARY
-          echo "![Critical](https://img.shields.io/badge/Critical-${{ steps.parse_issues.outputs.s1 }}-red)" >> $GITHUB_STEP_SUMMARY
-          echo "![High](https://img.shields.io/badge/High-${{ steps.parse_issues.outputs.s2 }}-orange)" >> $GITHUB_STEP_SUMMARY
-          echo "![Medium](https://img.shields.io/badge/Medium-${{ steps.parse_issues.outputs.s3 }}-yellow)" >> $GITHUB_STEP_SUMMARY
-          echo "![Low](https://img.shields.io/badge/Low-${{ steps.parse_issues.outputs.s4 }}-yellow)" >> $GITHUB_STEP_SUMMARY
+          echo ""
+          echo "![Critical](https://img.shields.io/badge/Critical-${{ steps.parse_issues.outputs.s1 }}-red)" \
+          "![High](https://img.shields.io/badge/High-${{ steps.parse_issues.outputs.s2 }}-orange)" \
+          "![Medium](https://img.shields.io/badge/Medium-${{ steps.parse_issues.outputs.s3 }}-yellow)" \
+          "![Low](https://img.shields.io/badge/Low-${{ steps.parse_issues.outputs.s4 }}-yellow)" >> $GITHUB_STEP_SUMMARY
 
-      # ------------------ Upload JSON Badges as Artifacts ------------------
-      - name: Create JSON Badges
-        run: |
-          mkdir -p badges
-          echo '{"schemaVersion": 1, "label": "Critical", "message": "${{ steps.parse_issues.outputs.s1 }}", "color": "red"}' > badges/s1.json
-          echo '{"schemaVersion": 1, "label": "High", "message": "${{ steps.parse_issues.outputs.s2 }}", "color": "orange"}' > badges/s2.json
-          echo '{"schemaVersion": 1, "label": "Medium", "message": "${{ steps.parse_issues.outputs.s3 }}", "color": "yellow"}' > badges/s3.json
-          echo '{"schemaVersion": 1, "label": "Low", "message": "${{ steps.parse_issues.outputs.s4 }}", "color": "red"}' > badges/s4.json
+   
