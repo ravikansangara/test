@@ -1,12 +1,5 @@
 # test
 
-f1: commit-1
+This is a test repository.
 
-main: commit-2
-
-main: commit-3
-
-main: commit-4
-
-main: commot-5
 
