@@ -8,3 +8,5 @@ This is a test repository.
 - bugfix-2
 - bugfix-3
 - bugfix-10
+- bugfix-11
+- bugfix-12
