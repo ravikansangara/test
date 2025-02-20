@@ -7,3 +7,4 @@ This is a test repository.
 - bugfix-1
 - bugfix-2
 - bugfix-3
+- bugfix-10
